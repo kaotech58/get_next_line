@@ -6,7 +6,7 @@
 /*   By: teiffe <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 12:36:14 by teiffe            #+#    #+#             */
-/*   Updated: 2022/07/06 13:42:29 by teiffe           ###   ########.fr       */
+/*   Updated: 2022/07/06 17:24:33 by teiffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	str = (char *)malloc(sizeof(*s) * (len + 1));
 	i = 0;
 	j = 0;
-	if (!str)
+	if (str == 0)
 	{
 		return (NULL);
 	}
@@ -34,22 +34,30 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		}
 		j++;
 	}
-	str[i] = '\0';
+	str[i] = 0;
 	return (str);
 }
 
-size_t	ft_strlen(const char *s)
+/*int	ft_strlen(const char *s)
 {
 	const char	*stringend = s;
 
 	while (*stringend)
-	{
 		++stringend;
-	}
 	return (stringend - s);
+}*/
+
+int	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+/*char	*ft_strchr(const char *s, int c)
 {
 	while (*s)
 	{
@@ -64,6 +72,18 @@ char	*ft_strchr(const char *s, int c)
 		return ((char *)s);
 	}
 	return (NULL);
+}*/
+char	*ft_strchr(const char *s, int i)
+{
+	while (*s)
+	{
+		if (*s == i)
+			return ((char *)s);
+		s++;
+	}
+	if (i == '\0')
+		return ((char *)s);
+	return (0);
 }
 
 char	*ft_strdup(const char *str)
@@ -71,7 +91,7 @@ char	*ft_strdup(const char *str)
 	return (ft_substr(str, 0, ft_strlen(str)));
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+/*char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*join;
 	int		i;
@@ -79,19 +99,36 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	join = (char *) malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!join)
-	{
 		return (NULL);
-	}
 	while (*s1)
-	{
-		join[i] = *s1++;
-		i++;
-	}
+		join[i++] = *s1++;
 	while (*s2)
-	{
-		join[i] = *s2++;
-		i++;
-	}
+		join[i++] = *s2++;
 	join[i] = '\0';
 	return (join);
+}*/
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (str == NULL)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j] != '\0')
+	{
+		str[i + j] = s2[j];
+		j++;
+	}
+	str[i + j] = '\0';
+	return (str);
 }

@@ -6,31 +6,11 @@
 /*   By: teiffe <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 12:36:42 by teiffe            #+#    #+#             */
-/*   Updated: 2022/07/06 13:41:25 by teiffe           ###   ########.fr       */
+/*   Updated: 2022/07/06 15:27:26 by teiffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*get_next_line(int fd)
-{
-	char		*line;
-	char		*buffer;
-	static char	*backup;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
-	line = ft_read_file(fd, buffer, backup);
-	free(buffer);
-	buffer = NULL;
-	if (!line)
-		return (NULL);
-	backup = ft_line(line);
-	return (line);
-}
 
 static char	*ft_read_file(int fd, char *buffer, char *backup)
 {
@@ -76,4 +56,24 @@ static char	*ft_line(char *line)
 	}
 	line[i + 1] = '\0';
 	return (remainder);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*line;
+	char		*buffer;
+	static char	*backup;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (NULL);
+	line = ft_read_file(fd, buffer, backup);
+	free(buffer);
+	buffer = NULL;
+	if (!line)
+		return (NULL);
+	backup = ft_line(line);
+	return (line);
 }
